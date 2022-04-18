@@ -1,0 +1,64 @@
+--== Diese Funktion muss registriert werden, da sie beim allerersten Tick eines Spieles durch ein Event aufgerufen wird
+function InitVar()
+        -- setze die erste Speichervariable auf 0
+        Vars.Save1 = 0
+end
+--== Diese Funktion muss nicht registriert werden, da sie nicht als Event aufgetragen wird
+function print(text)
+        dbg.stm(text) -- gibt text im Chatfenster zurück
+end
+-- Das Spiel ruft new_game von selber auf
+function new_game()
+        -- InitVar wird ein mal beim allerersten Tick eines Spieles aufgerufen
+        request_event(InitVar, Events.FIRST_TICK_OF_NEW_GAME)
+end
+
+-- Das Spiel ruft register_functions von selber auf
+function register_functions()
+        -- registriere Funktion als "Eventfunktion"
+        reg_func(InitVar)
+end
+
+
+
+function new_game()
+        -- InitVar wird ein mal beim allerersten Tick eines Spieles aufgerufen
+        
+Magic.IncreaseMana(1,80000)
+Magic.IncreaseMana(2,80000)
+Magic.IncreaseMana(3,80000)
+Magic.IncreaseMana(4,80000)
+Magic.IncreaseMana(5,80000)
+Magic.IncreaseMana(6,12000)
+Magic.IncreaseMana(7,80000)
+Magic.IncreaseMana(8,80000)
+Game.SetFightingStrength(2, 150)
+Game.SetFightingStrength(3, 150)
+Game.SetFightingStrength(4, 150)
+Game.SetFightingStrength(5, 150)
+Game.SetFightingStrength(7, 150)
+Game.SetFightingStrength(8, 150)
+
+
+i = 0
+repeat
+    Settlers.AddSettlers(512, 688, 5, Settlers.CARRIER, 200)
+    Settlers.AddSettlers(429, 900, 7, Settlers.CARRIER, 200)
+ i = i + 1
+until i>=2
+
+end
+function getAmountOfPlayerUnits(6)
+	local AmoutOfMilitary = 0
+ 	--Soldaten zaehlen	
+	AmoutOfMilitary =  AmoutOfMilitary + Settlers.Amount(playerId, Settlers.SWORDSMAN_01) +  Settlers.Amount(playerId, Settlers.SWORDSMAN_02) + Settlers.Amount(playerId, Settlers.SWORDSMAN_03)
+	-- Bogenschuetzen
+	AmoutOfMilitary =  AmoutOfMilitary + Settlers.Amount(playerId, Settlers.BOWMAN_01) +  Settlers.Amount(playerId, Settlers.BOWMAN_02) + Settlers.Amount(playerId, Settlers.BOWMAN_03)	
+	
+	return AmoutOfMilitary 
+end 
+
+function register_functions()
+        reg_func(new_game)
+        reg_func(text)
+end
